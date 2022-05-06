@@ -1,21 +1,21 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Main from "./components/layout/Main";
+import Home from "./pages/Home";
+import NotMatch from "./pages/NotMatch";
 
 function App() {
   return (
-    <div className="App">
-      <ul>
-        <li>
-          <Link to=".">Home</Link>
-        </li>
-        <li>
-          <Link to="es">Spanish</Link>
-        </li>
-      </ul>
-      <Routes>
-        <Route path="/" element={<p>Hello World!</p>} />
-        <Route path="es" element={<p>Hola Mundo!</p>} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate to="home" />} />
+      <Route path="home" element={<Main />}>
+        <Route index element={<Home />} />
+        <Route path="about" element={<p>About - NiHao</p>} />
+      </Route>
+      <Route path="404" element={<Main />}>
+        <Route index element={<NotMatch />} />
+      </Route>
+      <Route path="*" element={<Navigate to="404" />} />
+    </Routes>
   );
 }
 

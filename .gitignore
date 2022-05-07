@@ -1,5 +1,6 @@
 # cache
 .vscode/
+.git/
 
 # dependencies
 /node_modules

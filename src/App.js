@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Main from "./components/layout/Main";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import NotMatch from "./pages/NotMatch";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="about" element={<p>About - NiHao</p>} />
       </Route>
+      <Route path="login" element={<Login />} />
       <Route path="404" element={<Main />}>
         <Route index element={<NotMatch />} />
       </Route>

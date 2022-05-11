@@ -26,39 +26,19 @@ const Login = () => {
         </header>
 
         <div className={styles.alternative}>
-          <a href="/">
-            <img
-              src="/images/google_logo.png"
-              alt="Google"
-              height="30rem"
-              loading="eager"
-              className={styles.altimg}
-            />
-          </a>
-          <span className={styles.separator} />
-          <a href="/">
-            <img
-              src="/images/facebook_logo.png"
-              alt="Facebook"
-              height="30rem"
-              loading="eager"
-              className={styles.altimg}
-            />
-          </a>
-          <span className={styles.separator} />
-          <a href="/">
-            <img
-              src="/images/linkedIn_logo.png"
-              alt="LinkedIn"
-              height="30rem"
-              loading="eager"
-              className={styles.altimg}
-            />
-          </a>
-          <span className={styles.separator} />
           <a href="/signup" className={`${styles.link} ${styles.signup}`}>
             Signup
           </a>
+          <span className={styles.separator} />
+
+          <select
+            name="language"
+            id="language"
+            className={`${styles.link} ${styles.language}`}
+          >
+            <option value="spanich">English</option>
+            <option value="spanich">Spanish</option>
+          </select>
         </div>
 
         <form action="" method="post" className={styles.form}>
@@ -88,6 +68,9 @@ const Login = () => {
           <button className={`${styles.button}`} type="submit">
             Login
           </button>
+          <a href="/" className={`${styles.link} ${styles.forgot}`}>
+            Forgot password?
+          </a>
         </form>
       </section>
       <footer>

@@ -1,39 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { BiLibrary, BiShareAlt, BiStar, BiSliderAlt } from "react-icons/bi";
 import styles from "./Sidebar.module.css";
-import Modal from "../Modal";
 
 const Sidebar = () => {
-  const [isShareOpen, setIsShareOpen] = useState(false);
+  const [currPath, setCurrPath] = useState("");
+  const location = useLocation();
+  useEffect(() => {
+    setCurrPath(location.pathname);
+  }, [location]);
 
   return (
     <div className={styles.container}>
       <h2 className={styles.section}>Files</h2>
       <span className={styles.separator}></span>
-      <a className={`${styles.link} ${styles.active}`} href="/">
+      <Link
+        className={`${styles.link} ${
+          currPath === "/dashboard" ? styles.active : ""
+        }`}
+        to="."
+      >
         <BiLibrary className={styles.icon} size="1.2rem" /> My libraries
-      </a>
-      <button className={styles.link} onClick={() => setIsShareOpen(true)}>
+      </Link>
+      <Link
+        className={`${styles.link} ${
+          currPath === "/dashboard/shared" ? styles.active : ""
+        }`}
+        to="shared"
+      >
         <BiShareAlt className={styles.icon} size="1.2rem" /> Shared with me
-      </button>
+      </Link>
 
       <h2 className={styles.section}>Tools</h2>
       <span className={styles.separator}></span>
-      <a className={styles.link} href="/">
+      <Link className={styles.link} to="favorites">
         <BiStar className={styles.icon} size="1.2rem" /> Favorites
-      </a>
-      <a className={styles.link} href="/">
+      </Link>
+      <Link className={styles.link} to="settings">
         <BiSliderAlt className={styles.icon} size="1.2rem" /> Settings
-      </a>
-
-      <Modal
-        isOpen={isShareOpen}
-        closeBtn
-        width="800px"
-        onClose={() => setIsShareOpen(false)}
-      >
-        <h2>Modal</h2>
-      </Modal>
+      </Link>
     </div>
   );
 };

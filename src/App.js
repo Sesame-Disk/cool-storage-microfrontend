@@ -3,7 +3,8 @@ import Main from "./components/layout/Main";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Dash from "./components/layout/Dash";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Shared from "./pages/Dashboard/Shared";
 import NotMatch from "./pages/NotMatch";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Route path="dashboard" element={<Dash />}>
         <Route index element={<Dashboard />} />
         <Route path="my_libraries" element={<p>My Libraries - NiHao</p>} />
+        <Route path="shared" element={<Shared />} />
       </Route>
       <Route path="404" element={<Main />}>
         <Route index element={<NotMatch />} />

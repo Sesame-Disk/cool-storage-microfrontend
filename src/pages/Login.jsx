@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
 
 const Login = () => {
@@ -13,7 +14,7 @@ const Login = () => {
       <section className={`${styles.section}`}>
         <header className={styles.header}>
           <h1 className={styles.title}>Welcome to</h1>
-          <a href="/">
+          <Link typeof=".">
             <img
               className={styles.logo}
               src="logo192.png"
@@ -22,13 +23,13 @@ const Login = () => {
               width="100rem"
               loading="eager"
             />
-          </a>
+          </Link>
         </header>
 
         <div className={styles.alternative}>
-          <a href="/signup" className={`${styles.link} ${styles.signup}`}>
+          <Link to="signup" className={`${styles.link} ${styles.signup}`}>
             Signup
-          </a>
+          </Link>
           <span className={styles.separator} />
 
           <select
@@ -68,15 +69,15 @@ const Login = () => {
           <button className={`${styles.button}`} type="submit">
             Login
           </button>
-          <a href="/" className={`${styles.link} ${styles.forgot}`}>
+          <Link to="." className={`${styles.link} ${styles.forgot}`}>
             Forgot password?
-          </a>
+          </Link>
         </form>
       </section>
       <footer>
-        <a className={`${styles.link} ${styles.footer}`} href="/">
+        <Link className={`${styles.link} ${styles.footer}`} to=".">
           Privacy Policy | Terms of Service
-        </a>
+        </Link>
       </footer>
     </div>
   );

@@ -1,24 +1,11 @@
-import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { BiCaretDown } from "react-icons/bi";
 import styles from "./User_dropdawn.module.css";
+import Dropdown from "../Utils/Dropdown";
 
-const User_dropdawn = ({ show, setShow, onClickOutside }) => {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        onClickOutside && onClickOutside();
-      }
-    };
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  }, [onClickOutside]);
-
+const User_dropdawn = ({ show, setShow }) => {
   return (
-    <div ref={ref} className={styles.dropdown}>
+    <div className={styles.profile}>
       <div className={styles.dropdown_button} onClick={() => setShow(!show)}>
         <span className={styles.avatar}>A</span>
         <BiCaretDown
@@ -26,17 +13,9 @@ const User_dropdawn = ({ show, setShow, onClickOutside }) => {
           className={`${styles.caret} ${show ? styles.caret_open : ""}`}
         />
       </div>
-      {show && (
-        <div className={styles.dropdown_content}>
-          <a href="/">
-            <span className={styles.avatar}>A</span>
-            <span className={styles.name}>
-              <span className={styles.name_first}>A</span>
-              <span className={styles.name_last}>A</span>
-            </span>
-          </a>
-        </div>
-      )}
+      <Dropdown isOpen={show} onClose={setShow}>
+        <Link to="/">Link</Link>
+      </Dropdown>
     </div>
   );
 };

@@ -29,14 +29,17 @@
 .modal{
   display : flex;
 }
-.title {
+.modalHeader {
   margin-bottom: 1rem;
 }
-.buttons {
+.modalBody{
+  margin-bottom: 1rem;
+}
+.modalFooter {
   display: flex;
   justify-content: flex-end;
 }
-.btn {
+.modalAction {
   background-color: transparent;
   border: 0px solid #ccc;
   border-radius: 25px;
@@ -61,7 +64,6 @@
   color: #fff;
 }
 .field {
-  margin: 0.5rem 0;
   padding: 1rem;
   border: 1px solid #c3c3c3;
   border-radius: 25px;
@@ -72,3 +74,20 @@
   border-radius: 25px;
 }
 
+.dropdown_item {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 1rem 1rem;
+  text-align: left;
+  text-decoration: none;
+  color: black;
+  background-color: #f9f9f9;
+  border: 0px solid;
+  border-bottom: 1px solid #d2d2d2;
+  cursor: pointer;
+}
+.dropdown_item:hover {
+  border-radius: 25px;
+  background-color: #f3f3f3;
+}

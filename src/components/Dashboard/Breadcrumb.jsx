@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./Breadcrumb.module.css";
 
 const Breadcrumb = ({ crumbs }) => {
@@ -10,14 +11,14 @@ const Breadcrumb = ({ crumbs }) => {
       {crumbs.map((crumb, ci) => {
         return (
           <li key={ci} className={styles.breadcrumb_item}>
-            <a
+            <Link
               className={`${styles.btn_link} ${
                 isLast(ci) ? styles.disabled : ""
               }`}
-              href={crumb.link}
+              to={crumb.link}
             >
               {crumb.text}
-            </a>
+            </Link>
             {!isLast(ci) && (
               <span className={styles.breadcrumb_divider}>/</span>
             )}

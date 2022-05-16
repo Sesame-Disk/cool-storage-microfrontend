@@ -8,7 +8,7 @@ const Modal = (props) => {
       }`}
     >
       <div className={styles.modal_content} style={{ width: props.width }}>
-        {props.closeBtn && (
+        {props.onClose && (
           <button
             className={styles.modal_close}
             onClick={() => props.onClose()}

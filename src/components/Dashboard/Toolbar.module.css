@@ -8,10 +8,6 @@
   background-color: #dadada;
 }
 
-.actions {
-
-}
-
 .action{
   margin-right: 10px;
   border: 0px solid #000;
@@ -27,3 +23,52 @@
   background-color: #c3c3c3;
   
 }
+
+/* Modal */
+
+.modal{
+  display : flex;
+}
+.title {
+  margin-bottom: 1rem;
+}
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+.btn {
+  background-color: transparent;
+  border: 0px solid #ccc;
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+.btn_action { 
+  background-color: #ff8b85;
+  color: #fff;
+}
+.btn_action:hover { 
+  background-color: #d23c35;
+}
+.btn_cancel { 
+  border: 1px solid gray;
+  color: #000;
+}
+.btn_cancel:hover { 
+  background-color: gray;
+  border: 1px solid gray;
+  color: #fff;
+}
+.field {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: 1px solid #c3c3c3;
+  border-radius: 25px;
+}
+.field_text {
+  width: 100%;
+  height: 2rem;
+  border-radius: 25px;
+}
+

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { BiCaretDown } from "react-icons/bi";
-import styles from "./User_dropdawn.module.css";
+import styles from "./User_dropdown.module.css";
 import Dropdown from "../Utils/Dropdown";
 
 const User_dropdawn = ({ show, setShow }) => {

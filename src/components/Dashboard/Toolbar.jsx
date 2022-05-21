@@ -13,6 +13,7 @@ import HandleClickOut from "../Utils/HandleClickOut";
 import Breadcrumbs from "./Breadcrumb";
 import Dropdown from "../Utils/Dropdown";
 import Modal from "../Utils/Modal";
+import Share from "./Share";
 
 const Toolbar = () => {
   const [isRenameOpen, setIsRenameOpen] = useState(false);
@@ -148,23 +149,7 @@ const Toolbar = () => {
         className={styles.modal}
         onClose={() => setIsShareOpen(false)}
       >
-        <div className={styles.modalHeader}>
-          <h3>Share</h3>
-        </div>
-        <div className={styles.modalBody}>
-          <p>Share this file with others</p>
-        </div>
-        <div className={styles.modalFooter}>
-          <button className={`${styles.modalAction} ${styles.btn_action}`}>
-            Share
-          </button>
-          <button
-            className={`${styles.modalAction} ${styles.btn_cancel}`}
-            onClick={() => setIsShareOpen(false)}
-          >
-            Cancel
-          </button>
-        </div>
+        <Share onClose={setIsShareOpen} />
       </Modal>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Navtool.module.css";
-import User from "./User_dropdawn";
+import User from "./User_dropdown";
 import HandleClickOut from "../Utils/HandleClickOut";
 
 const Navtool = () => {

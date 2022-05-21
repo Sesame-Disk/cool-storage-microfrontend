@@ -14,7 +14,7 @@ const Login = () => {
       <section className={`${styles.section}`}>
         <header className={styles.header}>
           <h1 className={styles.title}>Welcome to</h1>
-          <Link typeof=".">
+          <Link to=".">
             <img
               className={styles.logo}
               src="logo192.png"
@@ -61,8 +61,13 @@ const Login = () => {
               name="checkbox"
               checked={isChecked}
               onClick={checkClick}
+              onChange={checkClick}
             />
-            <label for="checkbox" className={styles.link} onClick={checkClick}>
+            <label
+              htmlFor="checkbox"
+              className={styles.link}
+              onClick={checkClick}
+            >
               Remember me for 7 days
             </label>
           </span>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { BiCaretDown } from "react-icons/bi";
 import styles from "./User_dropdown.module.css";
 import Dropdown from "../Utils/Dropdown";
+import Logout from "../auth/Logout";
 
 const User_dropdawn = ({ show, setShow }) => {
   return (
@@ -14,7 +15,8 @@ const User_dropdawn = ({ show, setShow }) => {
         />
       </div>
       <Dropdown isOpen={show} onClose={setShow}>
-        <Link to="/">Link</Link>
+        <Link to="/">Home</Link>
+        <Logout />
       </Dropdown>
     </div>
   );

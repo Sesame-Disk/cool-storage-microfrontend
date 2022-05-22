@@ -1,12 +1,32 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { BiError } from "react-icons/bi";
 import styles from "./Login.module.css";
+import AuthContext from "../store/auth-context";
+import { GetToken } from "../components/auth/FetchData";
 
 const Login = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const checkClick = () => {
     setIsChecked(!isChecked);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    GetToken(email, password, (err, token) => {
+      if (err) {
+        setError(err);
+        return;
+      }
+      authContext.login(token, 1000 * 60);
+      navigate("../dashboard", { replace: true });
+    });
   };
 
   return (
@@ -42,19 +62,29 @@ const Login = () => {
           </select>
         </div>
 
-        <form action="" method="post" className={styles.form}>
+        <form onSubmit={submitHandler} className={styles.form}>
           <input
             className={`${styles.input}`}
             type="email"
             name="Email"
             placeholder="user@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             className={`${styles.input}`}
             type="password"
             name="Password"
             placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
+          {error && (
+            <div>
+              <BiError className={styles.icon} />
+              <span className={styles.error}>{error}</span>
+            </div>
+          )}
           <span className={`${styles.checkbox}`}>
             <input
               type="checkbox"

@@ -30,11 +30,6 @@
   margin-top: 0.7rem;
 }
 
-.auth {
-  color: #d23c35 !important;
-  font-weight: bold !important;
-}
-
 .navbar-item {
   color: #968888;
   font-size: 1.5rem;
@@ -52,4 +47,11 @@
 
 .navbar-item:hover {
   text-decoration: underline;
+}
+
+.auth {
+  color: #d23c35;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
 }

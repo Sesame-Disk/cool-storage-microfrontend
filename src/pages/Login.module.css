@@ -94,6 +94,18 @@
   border-color: #c4c4c4
 }
 
+.error {
+  width: 100%;
+  color: #d23c35;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.icon {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+  color: #d23c35;
+}
+
 .checkbox {
   margin: 0 auto;
   margin-top: 0.5rem;

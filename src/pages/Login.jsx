@@ -34,7 +34,7 @@ const Login = () => {
       <section className={`${styles.section}`}>
         <header className={styles.header}>
           <h1 className={styles.title}>Welcome to</h1>
-          <Link to=".">
+          <Link to="/">
             <img
               className={styles.logo}
               src="logo192.png"
@@ -47,9 +47,12 @@ const Login = () => {
         </header>
 
         <div className={styles.alternative}>
-          <Link to="signup" className={`${styles.link} ${styles.signup}`}>
+          <a
+            href="https://sesamedisk.com/register/"
+            className={`${styles.link} ${styles.signup}`}
+          >
             Signup
-          </Link>
+          </a>
           <span className={styles.separator} />
 
           <select
@@ -104,15 +107,28 @@ const Login = () => {
           <button className={`${styles.button}`} type="submit">
             Login
           </button>
-          <Link to="." className={`${styles.link} ${styles.forgot}`}>
+          <a
+            href="https://app.nihaoconsult.com/accounts/password/reset/"
+            className={`${styles.link} ${styles.forgot}`}
+          >
             Forgot password?
-          </Link>
+          </a>
         </form>
       </section>
       <footer>
-        <Link className={`${styles.link} ${styles.footer}`} to=".">
-          Privacy Policy | Terms of Service
-        </Link>
+        <a
+          className={`${styles.link} ${styles.footer}`}
+          href="https://www.nihaocloud.com/privacy-policy/"
+        >
+          Privacy Policy
+        </a>
+        <span className={styles.footer}> | </span>
+        <a
+          className={`${styles.link} ${styles.footer}`}
+          href="https://www.nihaocloud.com/privacy-policy/#terms_of_service"
+        >
+          Terms of Service
+        </a>
       </footer>
     </div>
   );

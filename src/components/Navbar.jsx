@@ -32,14 +32,12 @@ const Navbar = () => {
         >
           Home
         </Link>
-        <Link
-          className={`${styles["navbar-item"]} ${
-            currPath === "/home/about" && styles.active
-          }`}
-          to="/home/about"
+        <a
+          className={`${styles["navbar-item"]}`}
+          href="https://sesamedisk.com/about/"
         >
           About
-        </Link>
+        </a>
       </div>
       <div className={styles["navbar-item-container"]}>
         {authContext.isAuthenticated ? (

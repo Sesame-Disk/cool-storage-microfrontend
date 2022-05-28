@@ -33,24 +33,29 @@ export const GetToken = async (user, pass, callback) => {
 };
 
 export const VerifyToken = async (api_token, callback) => {
-  await axios
-    .get(
-      api_url + "/auth/ping/",
-      { key: "value" },
-      {
-        headers: {
-          Authorization: `Token ${api_token}`,
-        },
-      }
-    )
+  const config = {
+    headers: {
+      Accept: "*/*",
+      Authorization: `Token ${api_token}`,
+      "ESTA-ES-MI-HEADER": "HEADER_DE_PRUEBA",
+    },
+  };
+
+  await axios({
+    method: "get",
+    url: `${api_url}/api/v1/auth/ping/`,
+    headers: config.headers,
+  })
     .then((response) => {
+      console.log(response.data);
       if (response.status === 200) {
         if (response.data === "pong") {
           callback();
           return;
         }
         callback(response.data);
-      } else callback(response.status + ": " + response.statusText);
+      } else
+        callback(response.status + ": " + response.statusText, response.data);
     })
     .catch((err) => {
       console.log("API_ERROR: " + err);

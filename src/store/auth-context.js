@@ -44,17 +44,18 @@ export const AuthContextProvider = (props) => {
       }
 
       //todo: validacion del token
-      setToken(item.value);
-      setUserIsLoggedIn(true);
+      // setToken(item.value);
+      // setUserIsLoggedIn(true);
 
-      // VerifyToken(item.value, (err) => {
-      //   if (err) {
-      //     localStorage.removeItem("cool-token");
-      //     return;
-      //   }
-      //   setToken(item.value);
-      //   setUserIsLoggedIn(true);
-      // });
+      VerifyToken(item.value, (err, data) => {
+        if (err) {
+          localStorage.removeItem("cool-token");
+          console.log(data);
+          return;
+        }
+        setToken(item.value);
+        setUserIsLoggedIn(true);
+      });
     }
   };
 

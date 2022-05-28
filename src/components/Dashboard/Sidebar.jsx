@@ -36,7 +36,12 @@ const Sidebar = () => {
       <Link className={styles.link} to="favorites">
         <BiStar className={styles.icon} size="1.2rem" /> Favorites
       </Link>
-      <Link className={styles.link} to="settings">
+      <Link
+        className={`${styles.link} ${
+          currPath === "/dashboard/settings" ? styles.active : ""
+        }`}
+        to="settings"
+      >
         <BiSliderAlt className={styles.icon} size="1.2rem" /> Settings
       </Link>
     </div>

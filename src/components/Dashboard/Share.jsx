@@ -58,7 +58,7 @@ const Share = (onClose) => {
                 checked={isPass}
                 onClick={() => setIsPass(!isPass)}
               />
-              <label for="pass">Add password protection</label>
+              <label htmlFor="pass">Add password protection</label>
               {isPass && (
                 <>
                   <p className={styles.tip}>
@@ -92,7 +92,7 @@ const Share = (onClose) => {
                     value="pad"
                     required
                   />
-                  <label for="pad">Preview and download</label>
+                  <label htmlFor="pad">Preview and download</label>
                 </li>
                 <li>
                   <input
@@ -102,7 +102,7 @@ const Share = (onClose) => {
                     value="po"
                     required
                   />
-                  <label for="po">Preview only</label>
+                  <label htmlFor="po">Preview only</label>
                 </li>
                 <li>
                   <input
@@ -112,7 +112,7 @@ const Share = (onClose) => {
                     value="dau"
                     required
                   />
-                  <label for="dau">Download and upload</label>
+                  <label htmlFor="dau">Download and upload</label>
                 </li>
               </ul>
               <button className={styles.btn_action}>Generate</button>

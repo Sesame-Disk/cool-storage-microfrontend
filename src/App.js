@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Dash from "./components/layout/Dash";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Shared from "./pages/Dashboard/Shared";
+import Settings from "./pages/Dashboard/Settings";
 import NotMatch from "./pages/NotMatch";
 
 function App() {
@@ -26,12 +27,13 @@ function App() {
       </Route>
       <Route path="login" element={<Login />} />
       <Route
-        element={<ProtectedRoute isAllowed={authContext.isAuthenticated} />}
+        element={<ProtectedRoute isAllowed={!authContext.isAuthenticated} />}
       >
         <Route path="dashboard" element={<Dash />}>
           <Route index element={<Dashboard />} />
           <Route path="my_libraries" element={<p>My Libraries - NiHao</p>} />
           <Route path="shared" element={<Shared />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
       </Route>
       <Route path="404" element={<Main />}>

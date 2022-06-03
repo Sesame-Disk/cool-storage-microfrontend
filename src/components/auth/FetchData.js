@@ -28,26 +28,16 @@ export const GetToken = async (user, pass, callback) => {
       } else callback(response.status + ": " + response.statusText);
     })
     .catch((err) => {
-      console.log("API_ERROR: " + err);
+      callback(err.response.data);
     });
 };
 
 export const VerifyToken = async (api_token, callback) => {
-  const config = {
-    headers: {
-      Accept: "*/*",
-      Authorization: `Token ${api_token}`,
-      "ESTA-ES-MI-HEADER": "HEADER_DE_PRUEBA",
-    },
-  };
-
-  await axios({
-    method: "get",
-    url: `${api_url}/api/v1/auth/ping/`,
-    headers: config.headers,
-  })
+  await axios
+    .get(`${api_url}/api/v1/auth/ping/`, {
+      headers: { Authorization: `Token ${api_token}` },
+    })
     .then((response) => {
-      console.log(response.data);
       if (response.status === 200) {
         if (response.data === "pong") {
           callback();
@@ -58,6 +48,23 @@ export const VerifyToken = async (api_token, callback) => {
         callback(response.status + ": " + response.statusText, response.data);
     })
     .catch((err) => {
-      console.log("API_ERROR: " + err);
+      callback(err.response.data);
+    });
+};
+
+export const GetAccount = async (api_token, callback) => {
+  await axios
+    .get(`${api_url}/api/v1/account/info/`, {
+      headers: { Authorization: `Token ${api_token}` },
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        callback(null, response.data);
+        return;
+      } else
+        callback(response.status + ": " + response.statusText, response.data);
+    })
+    .catch((err) => {
+      callback(err.response.data);
     });
 };

@@ -13,9 +13,14 @@ const AuthContext = React.createContext({
 export const AuthContextProvider = (props) => {
   const [token, setToken] = useState("");
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({});
+
+  const userHandler = (data) => {
+    setUser(data);
+  };
 
   const loginHandler = (value, ttl) => {
-    setToken(token);
+    setToken(value);
     setUserIsLoggedIn(true);
     const now = new Date().getTime();
     const item = {
@@ -62,6 +67,8 @@ export const AuthContextProvider = (props) => {
   const contextValue = {
     token: token,
     isAuthenticated: userIsLoggedIn,
+    user: user,
+    updateUser: userHandler,
     login: loginHandler,
     logout: logoutHandler,
     verifyToken: verifyTokenHandler,

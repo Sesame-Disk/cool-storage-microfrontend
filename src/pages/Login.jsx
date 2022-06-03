@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiError } from "react-icons/bi";
 import styles from "./Login.module.css";
 import AuthContext from "../store/auth-context";
-import { GetToken } from "../components/auth/FetchData";
+import { GetToken, GetAccount } from "../components/auth/FetchData";
 
 const Login = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -19,14 +19,27 @@ const Login = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    GetToken(email, password, (err, token) => {
-      if (err) {
-        setError(err);
-        return;
-      }
-      authContext.login(token, 1000 * 60);
-      navigate("../dashboard", { replace: true });
-    });
+    try {
+      GetToken(email, password, (err, token) => {
+        if (err) {
+          setError(err);
+          return;
+        } else {
+          authContext.login(token, 1000 * 60 * 30);
+          GetAccount(token, (err, account) => {
+            if (err) {
+              setError(err);
+              return;
+            } else {
+              authContext.updateUser(account);
+            }
+          });
+          navigate("/dashboard", { replace: true });
+        }
+      });
+    } catch (error) {
+      setError(error);
+    }
   };
 
   return (

@@ -2,24 +2,24 @@
   padding: 1rem;
 }
 
-h1 {
+.h1 {
   border-bottom: 2px solid #eaeaea;
 }
 
-h2 {
+.h2 {
   margin: 1.5rem 0 0.5rem 0;
   border-bottom: 2px solid #eaeaea;
 }
 
-h3 {
+.h3 {
   margin: 0.5rem 0;
 }
 
-span {
+.span {
   margin: 0 0.5rem;
 }
 
-select {
+.select {
   display: inline-block;
 	width: 100%;
   max-width: 20rem;

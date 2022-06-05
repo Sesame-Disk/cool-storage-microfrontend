@@ -1,12 +1,14 @@
 import { useState } from "react";
 import {
   BiRename,
+  BiArchiveOut,
+  BiCopyAlt,
   BiTrash,
   BiAddToQueue,
   BiShare,
   BiMessageAltAdd,
   BiCloudUpload,
-  BiCloudDownload,
+  BiDownload,
 } from "react-icons/bi";
 import styles from "./Toolbar.module.css";
 import HandleClickOut from "../Utils/HandleClickOut";
@@ -14,13 +16,19 @@ import Breadcrumbs from "./Breadcrumb";
 import Dropdown from "../Utils/Dropdown";
 import Modal from "../Utils/Modal";
 import Share from "./Share";
+import Copy from "./Copy";
+import FromSeafile from "./FromSeafile";
 
 const Toolbar = () => {
   const [isRenameOpen, setIsRenameOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [isCopyOpen, setIsCopyOpen] = useState(false);
+  const [isMoveOpen, setIsMoveOpen] = useState(false);
+  const [isSeafileOpen, setIsSeafileOpen] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isNewOpen, setIsNewOpen] = useState(false);
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [crumbs, setCrumbs] = useState([
     { text: "Home", link: "/" },
     { text: "Library", link: "/library" },
@@ -55,6 +63,12 @@ const Toolbar = () => {
         <button className={styles.action} onClick={() => setIsRenameOpen(true)}>
           <BiRename />
         </button>
+        <button className={styles.action} onClick={() => setIsMoveOpen(true)}>
+          <BiArchiveOut />
+        </button>
+        <button className={styles.action} onClick={() => setIsCopyOpen(true)}>
+          <BiCopyAlt />
+        </button>
         <button className={styles.action} onClick={() => setIsDeleteOpen(true)}>
           <BiTrash />
         </button>
@@ -64,11 +78,41 @@ const Toolbar = () => {
         <button className={styles.action} onClick={() => setIsShareOpen(true)}>
           <BiShare />
         </button>
+        <HandleClickOut
+          onClickOutside={() => setIsUploadOpen(false)}
+          style={{ display: "inline-block" }}
+        >
+          <button
+            className={styles.action}
+            onClick={() => setIsUploadOpen(!isUploadOpen)}
+          >
+            <BiCloudUpload />
+          </button>
+          <Dropdown isOpen={isUploadOpen} onClose={setIsUploadOpen}>
+            <label htmlFor="upfiles" className={styles.dropdown_item}>
+              Upload Files
+            </label>
+            <input
+              type="file"
+              id="upfiles"
+              name="upfiles"
+              multiple
+              style={{ display: "none" }}
+              onChange={() => console.log("upfiles")}
+            />
+            <button
+              className={styles.dropdown_item}
+              onClick={() => {
+                setIsUploadOpen(false);
+                setIsSeafileOpen(true);
+              }}
+            >
+              Upload from Seafile
+            </button>
+          </Dropdown>
+        </HandleClickOut>
         <button className={styles.action}>
-          <BiCloudUpload />
-        </button>
-        <button className={styles.action}>
-          <BiCloudDownload />
+          <BiDownload />
         </button>
       </div>
 
@@ -150,6 +194,31 @@ const Toolbar = () => {
         onClose={() => setIsShareOpen(false)}
       >
         <Share onClose={setIsShareOpen} />
+      </Modal>
+
+      {/*   Copy FORM    */}
+      <Modal
+        isOpen={isCopyOpen}
+        className={styles.modal}
+        onClose={() => setIsCopyOpen(false)}
+      >
+        <Copy title="Copy selected item(s) to:" onClose={setIsCopyOpen} />
+      </Modal>
+      {/*   Move FORM    */}
+      <Modal
+        isOpen={isMoveOpen}
+        className={styles.modal}
+        onClose={() => setIsMoveOpen(false)}
+      >
+        <Copy title="Move selected item(s) to:" onClose={setIsMoveOpen} />
+      </Modal>
+      {/*   From Seafile FORM    */}
+      <Modal
+        isOpen={isSeafileOpen}
+        className={styles.modal}
+        onClose={() => setIsSeafileOpen(false)}
+      >
+        <FromSeafile title="Upload from Seafile:" onClose={setIsSeafileOpen} />
       </Modal>
     </div>
   );

@@ -81,11 +81,13 @@
   padding: 1rem 1rem;
   text-align: left;
   text-decoration: none;
+  font-size: 1rem;
   color: black;
   background-color: #f9f9f9;
   border: 0px solid;
   border-bottom: 1px solid #d2d2d2;
   cursor: pointer;
+  white-space: nowrap;
 }
 .dropdown_item:hover {
   border-radius: 25px;

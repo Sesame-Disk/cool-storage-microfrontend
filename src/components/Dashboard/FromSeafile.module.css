@@ -1,0 +1,81 @@
+.modal {
+  height: 80vh;
+  width: 60vw;
+  overflow-y: initial;
+}
+
+.modalHeader {
+  border-bottom: 2px solid gray;
+  padding-bottom: 0.4rem;
+  padding-left: 0.3rem;
+}
+
+.modalBody {
+  height: 60vh;
+  display: flex;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  overflow-y: auto;
+}
+.modalBody main {
+  padding: 1rem;
+}
+
+.list_container {
+  border: 1px solid #c2c2c2;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.list {
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+.tip {
+  margin: 0.5rem 0;
+  color: #daaa0d;
+  font-size: 0.8rem
+}
+
+.modalForm {
+  width: 100%;
+}
+.modal_to {
+  margin-top: 1rem;
+}
+
+.field {
+  display: inline-block;
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: 10px;
+}
+
+.checkbox {
+  position: absolute;
+  bottom: 5rem;
+  left: 2rem;
+  margin-top: 1rem;
+}
+
+.btn_action {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 1rem 2rem 1.5rem 0.5rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #d23c35;
+  background-color: transparent;
+  border: 1px solid #d23c35;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn_action:hover {
+  background-color: #d23c35;
+  color: #fff
+}

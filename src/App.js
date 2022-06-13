@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import AuthContext from "./store/auth-context";
 import Main from "./components/layout/Main";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+import Login from "./pages/login/Login";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import Dash from "./components/layout/Dash";
 import Dashboard from "./pages/Dashboard/Dashboard";

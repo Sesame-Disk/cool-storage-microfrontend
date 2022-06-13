@@ -2,8 +2,8 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiError } from "react-icons/bi";
 import styles from "./Login.module.css";
-import AuthContext from "../store/auth-context";
-import { GetToken, GetAccount } from "../components/auth/FetchData";
+import AuthContext from "../../store/auth-context";
+import { GetToken, GetAccount } from "../../components/auth/FetchData";
 
 const Login = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -96,7 +96,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           {error && (
-            <div>
+            <div data-testid="test-error">
               <BiError className={styles.icon} />
               <span className={styles.error}>{error}</span>
             </div>

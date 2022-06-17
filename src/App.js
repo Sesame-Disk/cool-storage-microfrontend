@@ -27,7 +27,7 @@ function App() {
       </Route>
       <Route path="login" element={<Login />} />
       <Route
-        element={<ProtectedRoute isAllowed={authContext.isAuthenticated} />}
+        element={<ProtectedRoute isAllowed={!authContext.isAuthenticated} />}
       >
         <Route path="dashboard" element={<Dash />}>
           <Route index element={<Dashboard />} />

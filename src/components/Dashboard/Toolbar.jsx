@@ -17,6 +17,7 @@ import Dropdown from "../Utils/Dropdown";
 import Modal from "../Utils/Modal";
 import Share from "./Share";
 import Copy from "./Copy";
+import UploadFiles from "./UploadFiles/UploadFiles";
 import FromSeafile from "./FromSeafile";
 
 const Toolbar = () => {
@@ -29,6 +30,7 @@ const Toolbar = () => {
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isNewOpen, setIsNewOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isUploadFileOpen, setIsUploadFileOpen] = useState(false);
   const [crumbs, setCrumbs] = useState([
     { text: "Home", link: "/" },
     { text: "Library", link: "/library" },
@@ -89,17 +91,15 @@ const Toolbar = () => {
             <BiCloudUpload />
           </button>
           <Dropdown isOpen={isUploadOpen} onClose={setIsUploadOpen}>
-            <label htmlFor="upfiles" className={styles.dropdown_item}>
+            <button
+              className={styles.dropdown_item}
+              onClick={() => {
+                setIsUploadOpen(false);
+                setIsUploadFileOpen(true);
+              }}
+            >
               Upload Files
-            </label>
-            <input
-              type="file"
-              id="upfiles"
-              name="upfiles"
-              multiple
-              style={{ display: "none" }}
-              onChange={() => console.log("upfiles")}
-            />
+            </button>
             <button
               className={styles.dropdown_item}
               onClick={() => {
@@ -211,6 +211,14 @@ const Toolbar = () => {
         onClose={() => setIsMoveOpen(false)}
       >
         <Copy title="Move selected item(s) to:" onClose={setIsMoveOpen} />
+      </Modal>
+      {/*   Upload Files FROM    */}
+      <Modal
+        isOpen={isUploadFileOpen}
+        className={styles.modal}
+        onClose={() => setIsUploadFileOpen(false)}
+      >
+        <UploadFiles title="Upload Files:" onClose={setIsUploadFileOpen} />
       </Modal>
       {/*   From Seafile FORM    */}
       <Modal

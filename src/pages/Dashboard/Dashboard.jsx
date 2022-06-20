@@ -9,7 +9,10 @@ const Dashboard = () => {
             <thead>
               <tr>
                 <th>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    onChange={() => console.log("Check change")}
+                  />
                 </th>
                 <th>Name</th>
                 <th>Size</th>
@@ -19,7 +22,10 @@ const Dashboard = () => {
             <tbody>
               <tr>
                 <td>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    onChange={() => console.log("Check change")}
+                  />
                 </td>
                 <td>This is Item number 1-1</td>
                 <td>This is Item number 2-1</td>
@@ -27,7 +33,10 @@ const Dashboard = () => {
               </tr>
               <tr>
                 <td>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    onChange={() => console.log("Check change")}
+                  />
                 </td>
                 <td>This is Item number 1-2</td>
                 <td>This is Item number 2-2</td>
@@ -35,7 +44,10 @@ const Dashboard = () => {
               </tr>
               <tr>
                 <td>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    onChange={() => console.log("Check change")}
+                  />
                 </td>
                 <td>This is Item number 1-3</td>
                 <td>This is Item number 2-3</td>
@@ -43,7 +55,10 @@ const Dashboard = () => {
               </tr>
               <tr>
                 <td>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    onChange={() => console.log("Check change")}
+                  />
                 </td>
                 <td>This is Item number 1-4</td>
                 <td>This is Item number 2-4</td>

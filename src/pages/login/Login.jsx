@@ -19,6 +19,10 @@ const Login = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (email === "" || password === "") {
+      setError("Please enter your email and password");
+      return;
+    }
     try {
       GetToken(email, password, (err, token) => {
         if (err) {

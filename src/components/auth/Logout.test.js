@@ -1,16 +1,19 @@
+import React from "react";
+import renderer from "react-test-renderer";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import Logout from "./Logout";
-import { BrowserRouter } from "react-router-dom";
 
-const MockLogout = () => {
-  <BrowserRouter>
-    <Logout />
-  </BrowserRouter>;
-};
+jest.mock("react-router-dom", () => ({
+  useNavigate: jest.fn(),
+}));
 
 describe("Logout", () => {
   it("renders without crashing", () => {
-    render(<MockLogout />);
+    render(<Logout />);
+    expect(screen.getByText(/logout/i)).toBeInTheDocument();
+  });
+  it("renders correctly as espected", () => {
+    const tree = renderer.create(<Logout />).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });

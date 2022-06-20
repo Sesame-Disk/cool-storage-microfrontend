@@ -56,6 +56,7 @@ const Share = (onClose) => {
                 name="pass"
                 value="pass"
                 checked={isPass}
+                onChange={() => setIsPass(!isPass)}
                 onClick={() => setIsPass(!isPass)}
               />
               <label htmlFor="pass">Add password protection</label>

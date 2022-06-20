@@ -1,0 +1,91 @@
+.modal {
+  height: 80vh;
+  width: 60vw;
+}
+
+.modalHeader {
+  border-bottom: 2px solid gray;
+}
+
+.modalBody {
+  display: flex;
+}
+
+.modalBody aside {
+  height: 100vh;
+  min-width: 11rem;
+  padding: 1rem;
+  border-right: 1px solid gray;
+}
+
+.modalBody main {
+  padding: 1rem;
+}
+
+.btn_link {
+  display: block;
+  padding: 0.2rem 0;
+  font-size: 1.2rem;
+  background-color: transparent;
+  border: 0px solid;
+  cursor: pointer;
+}
+
+.btn_link:hover {
+  color: #e25a53
+}
+
+.btn_link.active {
+  color: #d23c35;
+  font-weight: bold;
+}
+
+.link {
+  font-size:1rem;
+  color: #e25a53;
+}
+
+label {
+  font-size: 1rem;
+  padding-left: 0.5rem
+}
+
+.tip {
+  margin: 0.5rem 0;
+  color: #daaa0d;
+  font-size: 0.8rem
+}
+
+.field {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: 10px;
+
+}
+
+.permission {
+  margin-top:1.5rem;
+}
+
+.list {
+  list-style: none;
+  margin-left: 0.5rem;
+}
+.btn_action {
+  margin: 1rem 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #d23c35;
+  background-color: transparent;
+  border: 1px solid #d23c35;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn_action:hover {
+  background-color: #d23c35;
+  color: #fff
+}

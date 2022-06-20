@@ -10,8 +10,6 @@
   display: flex;
   justify-content: space-between;
   background-color: rgba(255, 255, 255, 1);
-  /* backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px); */
   box-shadow: 0px 5px 10px #0000004a;
   border-radius: 0 0 5px 5px;
 }
@@ -32,11 +30,6 @@
   margin-top: 0.7rem;
 }
 
-.auth {
-  color: #d23c35 !important;
-  font-weight: bold !important;
-}
-
 .navbar-item {
   color: #968888;
   font-size: 1.5rem;
@@ -54,4 +47,11 @@
 
 .navbar-item:hover {
   text-decoration: underline;
+}
+
+.auth {
+  color: #d23c35;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
 }

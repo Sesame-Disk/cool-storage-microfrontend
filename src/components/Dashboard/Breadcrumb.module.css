@@ -1,0 +1,25 @@
+.breadcrumb{
+  list-style: none;
+  display: flex;
+}
+
+.breadcrumb_divider {
+  margin: 0 0.5rem;
+  color: gray;
+}
+
+.btn_link {
+  text-decoration: none;
+  font-size:1.2rem;
+  color: #d23c35;
+}
+.btn_link:hover {
+  text-decoration: underline;
+}
+.disabled:hover {
+  text-decoration: none;
+}
+
+.disabled {
+  color: gray;
+}

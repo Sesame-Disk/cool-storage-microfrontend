@@ -6,7 +6,8 @@ const Footer = () => {
       <div className={styles.container}>
         <div className={styles["text-centered"]}>
           <p>
-            <strong>NiHao Cloud</strong> by <a href="/">link</a>
+            <strong>Cool Storage</strong> by{" "}
+            <a href="https://sesamedisk.com/">NiHao Cloud</a>
           </p>
         </div>
       </div>

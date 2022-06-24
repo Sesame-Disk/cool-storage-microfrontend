@@ -24,11 +24,14 @@
 }
 
 .modal_preview {
-  height: 55vh;
-  display: flex;
+  height: 60vh;
+  /* display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-around; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1rem;
   margin: 0.5rem;
   margin-top: 0;
   padding: 0.5rem;
@@ -38,6 +41,8 @@
 
 .modal_preview_item {
   width:10vw;
+  max-height: 11rem;
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 0.5rem;
@@ -47,10 +52,23 @@
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
+.modal_preview_item_close {
+  position: absolute;
+  top: -0.2rem;
+  right: -0.5rem;
+  border-radius: 50%;
+  background-color: #c1c1c145;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+}
+.modal_preview_item_close:hover{
+  transform: scale(1.1);
+}
 .modal_preview_item_img_img {
   width: 100%;
   height: 10vh;
-  object-fit: fill;
+  object-fit: cover;
   border-radius: 0.3rem;
 }
 .modal_preview_item_info {
@@ -75,41 +93,64 @@
   flex-direction: row;
   justify-content: space-around;
   margin-top: 0.5rem;
-  margin-right: 1.2rem;
   margin-bottom: 1rem;
 }
 
 .btn_text {
-  display: block;
   white-space: nowrap;
-  font-size: 1.2rem;
-  margin-top: 0.4rem;
+  margin: auto 0;
 }
 
 .btn_icon {
-  display: block;
-  padding-right: 0.5rem;
-  color: #d23c35;
-  font-size: 2.2rem;
-  cursor: pointer;
+  /* display: block; */
+  margin-right: 0.5rem;
 }
 
-.btn_action {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 1rem 2rem 1.5rem 0.5rem;
-  padding: 0.5rem 1.5rem;
-  font-size: 1rem;
+.btn_secondary {
+  margin-right: 1.2rem;
+  padding: 0.5rem 1rem;
+  font-size: 1em;
   font-weight: bold;
   color: #d23c35;
   background-color: transparent;
   border: 1px solid #d23c35;
-  border-radius: 10px;
+  border-radius: 0.5rem;
+  white-space: nowrap;
   cursor: pointer;
 }
 
-.btn_action:hover {
+.btn_secondary:hover {
+  
   background-color: #d23c35;
-  color: #fff
+  color: #fff;
+  box-shadow: 5px 5px 3px 0px rgba(0, 0, 0, 0.3);
+}
+
+.btn_primary {
+  margin-right: 1.2rem;
+  padding: 0.5rem 1rem;
+  font-size: 1em;
+  font-weight: bold;
+  background-color: #d23c35;
+  color: white;
+  border: 1px solid #d23c35;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn_primary:hover{
+  box-shadow: 5px 5px 3px 0px rgba(0, 0, 0, 0.3);
+}
+
+.btn_disabled {
+  margin-right: 1.2rem;
+  padding: 0.5rem 1rem;
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  background-color: #c4c4c4;
+  color: gray;
+  border: 1px solid #c4c4c4;
+  cursor: default;
 }

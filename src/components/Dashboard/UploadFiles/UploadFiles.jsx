@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from "./UploadFiles.module.css";
 import ProgressBar from "../../Utils/ProgressBar/ProgressBar";
-import { BiFolder } from "react-icons/bi";
+import { BiFolder, BiCloudUpload, BiX } from "react-icons/bi";
 
 const UploadFiles = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -10,7 +10,7 @@ const UploadFiles = (props) => {
 
   const HandleSubmit = (e) => {
     e.preventDefault();
-    let formData = new FormData(document.querySelector("#form"));
+    let formData = new FormData(selectedFiles);
     axios
       .post("http://localhost:3001/api/v1/multiple/upload", formData, {
         headers: {
@@ -27,9 +27,38 @@ const UploadFiles = (props) => {
         setTimeout(() => {
           setUploadPercent(0);
           setSelectedFiles([]);
-          //todo: reset form
+          e.target.value = null;
         }, 2000);
       });
+  };
+
+  const AddFile = (e) => {
+    let newFiles = e.target.files;
+    let aux = [...selectedFiles, ...newFiles];
+    setSelectedFiles(aux);
+    e.target.value = null;
+  };
+
+  const RemoveFile = (file) => {
+    let remove = [...selectedFiles];
+    remove.splice(file, 1);
+    setSelectedFiles(remove);
+  };
+
+  const WrapName = (name) => {
+    if (name.length > 25) {
+      let extension = name.split(".").pop();
+      let newName = `${name.slice(0, 25)}...${extension}`;
+      name = newName;
+    }
+    return name;
+  };
+
+  const DinamicSize = (size) => {
+    let typeIndex = Math.floor(Math.log(size) / Math.log(1024));
+    let typeArray = ["B", "KB", "MB", "GB", "TB", "PB"];
+    let newSize = (size / Math.pow(1024, typeIndex)).toFixed(2);
+    return `${newSize} ${typeArray[typeIndex]}`;
   };
 
   return (
@@ -44,11 +73,9 @@ const UploadFiles = (props) => {
           onSubmit={(e) => HandleSubmit(e)}
         >
           <div className={styles.btn_container}>
-            <span className={styles.btn_text}>
-              {selectedFiles.length} file(s) selected
-            </span>
-            <label htmlFor="upload[]" className={styles.btn_label}>
+            <label htmlFor="upload[]" className={styles.btn_secondary}>
               <BiFolder className={styles.btn_icon} />
+              <span className={styles.btn_text}>Select</span>
             </label>
             <input
               type="file"
@@ -56,18 +83,31 @@ const UploadFiles = (props) => {
               name="upload[]"
               multiple
               style={{ display: "none" }}
-              onChange={(e) => setSelectedFiles([...e.target.files])}
+              onChange={(e) => AddFile(e)}
             />
+            <button
+              type="submit"
+              className={
+                selectedFiles.length === 0
+                  ? styles.btn_disabled
+                  : styles.btn_primary
+              }
+              disabled={selectedFiles.length === 0 ? true : false}
+            >
+              {/* //todo: make Loading*/}
+              <BiCloudUpload className={styles.btn_icon} />
+              Upload
+            </button>
           </div>
           {uploadPercent > 0 && <ProgressBar value={uploadPercent} />}
-          <button type="submit" className={styles.btn_action}>
-            {/* //todo: make Loading, disable btn */}
-            Upload
-          </button>
         </form>
         <div className={styles.modal_preview}>
           {selectedFiles.map((file, index) => (
             <div className={styles.modal_preview_item} key={index}>
+              <BiX
+                className={styles.modal_preview_item_close}
+                onClick={() => RemoveFile(index)}
+              />
               <div className={styles.modal_preview_item_img}>
                 <img
                   src={
@@ -82,11 +122,10 @@ const UploadFiles = (props) => {
               </div>
               <div className={styles.modal_preview_item_info}>
                 <p className={styles.modal_preview_item_info_name}>
-                  <span>{file.name}</span>
+                  <span>{WrapName(file.name)}</span>
                 </p>
                 <p className={styles.modal_preview_item_info_size}>
-                  {/* //todo: dinamic change to kb-mb-gb... */}
-                  <span>{(file.size / 1024).toFixed(2)} kb</span>
+                  <span>{DinamicSize(file.size)}</span>
                 </p>
               </div>
             </div>

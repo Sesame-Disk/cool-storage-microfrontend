@@ -37,7 +37,7 @@ const User_dropdawn = ({ show, setShow }) => {
           <span>
             Used: {info.usage} MB / {info.total} MB
           </span>
-          <ProgressBar value={info.space_usage} width="50%" />
+          <ProgressBar value={info.space_usage} width="50" />
         </div>
         <Link to="/" className={styles.dropdown_item}>
           Home

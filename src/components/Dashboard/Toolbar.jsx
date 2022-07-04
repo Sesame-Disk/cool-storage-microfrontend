@@ -213,12 +213,11 @@ const Toolbar = () => {
         <Copy title="Move selected item(s) to:" onClose={setIsMoveOpen} />
       </Modal>
       {/*   Upload Files FROM    */}
-      <Modal
-        isOpen={isUploadFileOpen}
-        className={styles.modal}
-        onClose={() => setIsUploadFileOpen(false)}
-      >
-        <UploadFiles title="Upload Files:" onClose={setIsUploadFileOpen} />
+      <Modal isOpen={isUploadFileOpen} className={styles.modal}>
+        <UploadFiles
+          title="Upload Files:"
+          onClose={() => setIsUploadFileOpen(false)}
+        />
       </Modal>
       {/*   From Seafile FORM    */}
       <Modal

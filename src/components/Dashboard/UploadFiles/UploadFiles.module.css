@@ -39,6 +39,15 @@
   overflow-y: auto;
 }
 
+.status_info {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+}
+.status_info * {
+  margin: 0 0.5rem;
+}
+
 .modal_preview_item {
   width:97%;
   max-height: 7vh;
@@ -196,11 +205,12 @@
 }
 
 .btn_terciary {
+  float: right;
+  display: inline;
   margin-right: 1rem;
   padding: 0.5rem 1rem;
   font-size: 0.7em;
   font-weight: normal;
-  text-align: end;
   background-color: transparent;
   color: #d23c35;
   border-radius: 0.5rem;

@@ -31,6 +31,7 @@ const Toolbar = () => {
   const [isNewOpen, setIsNewOpen] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   const [isUploadFileOpen, setIsUploadFileOpen] = useState(false);
+  const [uploadSelectedFiles, setUploadSelectedFiles] = useState(null);
   const [crumbs, setCrumbs] = useState([
     { text: "Home", link: "/" },
     { text: "Library", link: "/library" },
@@ -91,15 +92,22 @@ const Toolbar = () => {
             <BiCloudUpload />
           </button>
           <Dropdown isOpen={isUploadOpen} onClose={setIsUploadOpen}>
-            <button
-              className={styles.dropdown_item}
-              onClick={() => {
+            <label className={styles.dropdown_item} htmlFor="upload[]">
+              Upload Files
+            </label>
+            <input
+              type="file"
+              id="upload[]"
+              name="upload[]"
+              multiple
+              style={{ display: "none" }}
+              onChange={(e) => {
+                setUploadSelectedFiles(e);
                 setIsUploadOpen(false);
                 setIsUploadFileOpen(true);
+                // e.target.value = null;
               }}
-            >
-              Upload Files
-            </button>
+            />
             <button
               className={styles.dropdown_item}
               onClick={() => {
@@ -213,12 +221,19 @@ const Toolbar = () => {
         <Copy title="Move selected item(s) to:" onClose={setIsMoveOpen} />
       </Modal>
       {/*   Upload Files FROM    */}
-      <Modal isOpen={isUploadFileOpen} className={styles.modal}>
-        <UploadFiles
-          title="Upload Files:"
+      {isUploadFileOpen && (
+        <Modal
+          isOpen={isUploadFileOpen}
+          className={styles.modal}
           onClose={() => setIsUploadFileOpen(false)}
-        />
-      </Modal>
+        >
+          <UploadFiles
+            title="Upload Files:"
+            onClose={() => setIsUploadFileOpen(false)}
+            files={uploadSelectedFiles}
+          />
+        </Modal>
+      )}
       {/*   From Seafile FORM    */}
       <Modal
         isOpen={isSeafileOpen}

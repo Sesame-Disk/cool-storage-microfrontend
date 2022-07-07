@@ -11,94 +11,88 @@ import {
 import HugeUploader from "huge-uploader";
 
 const UploadFiles = (props) => {
+  const [uploader, setUploader] = useState();
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [uploadPercent, setUploadPercent] = useState(0);
   const [isUploader, setIsUploader] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isPause, setIsPause] = useState();
   const [filePercent, setFilePercent] = useState([0]);
+  const [uploadPercent, setUploadPercent] = useState(0);
   const [totalSize, setTotalSize] = useState(0);
   const [uploadSize, setUploadSize] = useState(0);
 
   useEffect(() => {
-    if (isUploading && currentIndex !== selectedFiles.length) {
+    if (props.files != null) {
+      AddFile(props.files);
+      setIsUploading(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isUploading && currentIndex < selectedFiles.length) {
       SendFileUpload(selectedFiles[currentIndex], currentIndex);
     }
   }, [isUploading, currentIndex]);
 
   useEffect(() => {
-    selectedFiles.length === 0 && setUploadPercent(0);
-  }, [selectedFiles]);
-
-  useEffect(() => {
     setUploadPercent((uploadSize / totalSize) * 100);
   }, [uploadSize, totalSize]);
 
-  const HandleSubmit = (e) => {
-    e.preventDefault();
-    ChangeTotalSize();
-    setIsUploading(true);
-  };
-
   const SendFileUpload = (ufile, index) => {
-    if (filePercent[index] === 100) return;
-    let auxIsPause = [...isPause];
-    auxIsPause[index] = true;
-    setIsPause(auxIsPause);
-    console.log("start uploader file: ", index);
-    let uploader = new HugeUploader({
-      endpoint: "http://localhost:3001/api/v1/single/upload",
-      chunkSize: 5,
-      file: ufile,
-    });
+    // let auxIsPause = [...isPause];
+    // auxIsPause[index] = true;
+    // setIsPause(auxIsPause);
+    if (!isPause[index]) {
+      let auxUploader = new HugeUploader({
+        endpoint: "http://localhost:3001/api/v1/single/upload",
+        chunkSize: 5,
+        file: ufile,
+      });
+      setUploader(auxUploader);
 
-    uploader.on("error", (err) => {
-      console.error("Something bad happened", err.detail);
-    });
+      auxUploader.on("error", (err) => {
+        console.error("Something bad happened", err.detail);
+      });
 
-    uploader.on("progress", (progress) => {
-      let auxSize = ufile.size * (progress.detail / 100);
-      setUploadSize(uploadSize + auxSize);
-      filePercent[index] = progress.detail;
-      setFilePercent(filePercent);
-    });
+      auxUploader.on("progress", (progress) => {
+        let auxSize = ufile.size * (progress.detail / 100);
+        setUploadSize(uploadSize + auxSize);
+        filePercent[index] = progress.detail;
+        console.log(progress.detail, "%");
+        setFilePercent(filePercent);
+      });
 
-    uploader.on("finish", (body) => {
-      if (index === selectedFiles.length - 1) {
-        setIsUploader(true);
-      }
-      setCurrentIndex(currentIndex + 1);
-      // RemoveFile(index);
-    });
+      auxUploader.on("finish", (body) => {
+        if (index === selectedFiles.length - 1) {
+          setIsUploader(true);
+        }
+        setCurrentIndex(index + 1);
+        setUploader();
+      });
+    } else {
+      setCurrentIndex(index + 1);
+    }
   };
 
   const TogglePause = (index) => {
     let auxIsPause = [...isPause];
-    auxIsPause[index] = !auxIsPause[index];
-    setIsPause(auxIsPause);
-    let uploader = new HugeUploader({
-      endpoint: "http://localhost:3001/api/v1/single/upload",
-      chunkSize: 5,
-      file: selectedFiles[index],
-    });
-
-    uploader.togglePause();
+    if (index === currentIndex) {
+      uploader.togglePause();
+      setIsPause(auxIsPause);
+      auxIsPause[index] = !auxIsPause[index];
+    } else {
+      auxIsPause[index] = !auxIsPause[index];
+    }
   };
 
   const AddFile = (e) => {
     let newFiles = e.target.files;
-    let aux = [...selectedFiles, ...newFiles];
+    let aux = [...newFiles];
     setSelectedFiles(aux);
+    ChangeTotalSize(aux);
     setIsPause(Array(aux.length).fill(false));
     setFilePercent(Array(aux.length).fill(0));
-    e.target.value = null;
-  };
-
-  const RemoveFile = (index) => {
-    let remove = [...selectedFiles];
-    remove.splice(index, 1);
-    setSelectedFiles(remove);
   };
 
   const WrapName = (name) => {
@@ -117,29 +111,12 @@ const UploadFiles = (props) => {
     return `${newSize} ${typeArray[typeIndex]}`;
   };
 
-  const ChangeTotalSize = () => {
+  const ChangeTotalSize = (files) => {
     let total = 0;
-    selectedFiles.forEach((file) => {
+    files.forEach((file) => {
       total += file.size;
     });
     setTotalSize(total);
-  };
-
-  const ClearAll = () => {
-    setSelectedFiles([]);
-    setCurrentIndex(0);
-    setUploadPercent(0);
-    setIsUploader(false);
-    setIsUploading(false);
-    setIsPause([]);
-    setFilePercent([]);
-    setUploadSize(0);
-    setTotalSize(0);
-  };
-
-  const Close = () => {
-    ClearAll();
-    props.onClose();
   };
 
   return (
@@ -148,7 +125,7 @@ const UploadFiles = (props) => {
         <h4>{props.title}</h4>
       </div>
       <main className={styles.modalBody}>
-        {!isUploading ? (
+        {/* {!isUploading ? (
           <form
             id="form"
             className={styles.modalForm}
@@ -185,8 +162,28 @@ const UploadFiles = (props) => {
               </button>
             </div>
           </form>
-        ) : (
-          <ProgressBar upload width={uploadPercent} text="Uploading..." />
+        ) : ( */}
+        <ProgressBar upload width={uploadPercent} text="Uploading..." />
+        {/* )} */}
+        <div className={styles.status_info}>
+          <span>{`${uploadPercent.toFixed(0)} %`}</span>|
+          <span>{`${DinamicSize(uploadSize)}/${DinamicSize(totalSize)}`}</span>
+        </div>
+        {!isUploader && (
+          <div style={{ float: "right" }}>
+            <span
+              className={styles.btn_terciary}
+              onClick={() => console.log("cancel")}
+            >
+              cancel all
+            </span>
+            <span
+              className={styles.btn_terciary}
+              onClick={() => console.log("restore all")}
+            >
+              restore all
+            </span>
+          </div>
         )}
         <div className={styles.modal_preview}>
           {selectedFiles.map((file, index) => {
@@ -220,30 +217,19 @@ const UploadFiles = (props) => {
                   {/* //todo: togglePause func */}
                   {filePercent[index] !== 100 &&
                     (isPause[index] ? (
-                      <BiPause onClick={() => TogglePause(index)} />
+                      <span className={styles.btn_terciary}>restore</span>
                     ) : (
-                      <>
-                        <BiPlay onClick={() => TogglePause(index)} />
-                        <BiTrash
-                          color="red"
-                          onClick={() => RemoveFile(index)}
-                        />
-                      </>
+                      <span className={styles.btn_terciary}>cancel</span>
                     ))}
                 </div>
               </div>
             );
           })}
         </div>
-        {selectedFiles.length > 0 && !isUploading && (
-          <span className={styles.btn_terciary} onClick={() => ClearAll()}>
-            clear
-          </span>
-        )}
         {isUploader && (
           <button
             className={`${styles.btn_primary} ${styles.btn_buttom}`}
-            onClick={() => Close()}
+            onClick={() => props.onClose()}
           >
             Close
           </button>

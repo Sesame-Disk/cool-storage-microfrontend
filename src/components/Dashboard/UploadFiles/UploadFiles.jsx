@@ -120,7 +120,7 @@ const UploadFiles = (props) => {
   };
 
   return (
-    <div className={styles.modal}>
+    <div className={styles.modal} data-testid="upload-modal">
       <div className={styles.modalHeader}>
         <h4>{props.title}</h4>
       </div>

@@ -139,7 +139,7 @@ const Share = (onClose) => {
               {/* //todo: ambos inputs son desplegables */}
               <input
                 type="text"
-                placeholder="Searsh users..."
+                placeholder="Search users..."
                 className={styles.field}
               />
               <input
@@ -155,7 +155,7 @@ const Share = (onClose) => {
               {/* //todo: ambos inputs son desplegables */}
               <input
                 type="text"
-                placeholder="Searsh groups..."
+                placeholder="Search groups..."
                 className={styles.field}
               />
               <input

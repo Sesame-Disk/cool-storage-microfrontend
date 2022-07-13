@@ -7,6 +7,7 @@ const ProgressBar = (props) => {
         className={`${styles.progress_bar_container} ${
           props.width === 100 && styles.progress_bar_green
         }`}
+        data-testid="progress-upload"
       >
         <div
           className={`${styles.progress_bar} ${
@@ -22,7 +23,7 @@ const ProgressBar = (props) => {
     );
   }
   return (
-    <div className={styles.progress_bar_container}>
+    <div className={styles.progress_bar_container} data-testid="progress">
       <div className={styles.progress_bar} style={{ width: `${props.width}%` }}>
         {props.text && (
           <span className={styles.progress_bar_text}>{props.text}</span>

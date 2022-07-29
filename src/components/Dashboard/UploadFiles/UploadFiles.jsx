@@ -39,6 +39,9 @@ const UploadFiles = (props) => {
   };
 
   const DinamicSize = (size) => {
+    if (size === 0) {
+      return "0 B";
+    }
     let typeIndex = Math.floor(Math.log(size) / Math.log(1024));
     let typeArray = ["B", "KB", "MB", "GB", "TB", "PB"];
     let newSize = (size / Math.pow(1024, typeIndex)).toFixed(2);

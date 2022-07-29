@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import styles from "./UploadItem.module.css";
 import HugeUploader from "huge-uploader";
+import sha256 from "crypto-js/sha256";
 
 const UploadItem = ({ file, index, ...props }) => {
   const [filePercent, setFilePercent] = useState(0);
   const [uploader, setUploader] = useState(null);
+  const [hash, setHash] = useState("");
   let src = "/images/file_preview.png";
   let cover = "";
   if (file.type.includes("image")) {
@@ -13,17 +15,28 @@ const UploadItem = ({ file, index, ...props }) => {
   }
 
   useEffect(() => {
-    setUploader(
-      new HugeUploader({
-        endpoint: "http://localhost:3001/api/v1/single/upload",
-        chunkSize: 5,
-        file: file,
-        headers: {
-          "uploader-file-name": file.name,
-        },
-      })
-    );
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      setHash(sha256(e.target.result).toString());
+    };
+    reader.readAsText(file);
   }, []);
+
+  useEffect(() => {
+    if (hash !== "") {
+      setUploader(
+        new HugeUploader({
+          endpoint: "http://localhost:3001/api/v1/single/upload",
+          chunkSize: 4,
+          file: file,
+          headers: {
+            "uploader-file-name": file.name,
+            "uploader-file-hash": hash,
+          },
+        })
+      );
+    }
+  }, [hash]);
 
   useEffect(() => {
     if (uploader !== null) {
@@ -35,6 +48,9 @@ const UploadItem = ({ file, index, ...props }) => {
 
       uploader.on("progress", (progress) => {
         let auxSize = file.size * (progress.detail / 100);
+        if (isNaN(auxSize)) {
+          auxSize = 0;
+        }
         props.setUploadSize(auxSize);
         let Percent = progress.detail;
         console.log(progress.detail, "%");

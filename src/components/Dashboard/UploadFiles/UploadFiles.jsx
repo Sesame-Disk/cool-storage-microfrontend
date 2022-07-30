@@ -1,97 +1,119 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import styles from "./UploadFiles.module.css";
-import ProgressBar from "../../Utils/ProgressBar/ProgressBar";
-import { BiFolder } from "react-icons/bi";
+import ProgressBar from "../../Utils/ProgressBar";
+import UploadItem from "./UploadItem/UploadItem";
 
 const UploadFiles = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isUploader, setIsUploader] = useState(false);
+  const [isPause, setIsPause] = useState();
   const [uploadPercent, setUploadPercent] = useState(0);
+  const [totalSize, setTotalSize] = useState(0);
+  const [uploadSize, setUploadSize] = useState(0);
 
-  const HandleSubmit = (e) => {
-    e.preventDefault();
-    let formData = new FormData(document.querySelector("#form"));
-    axios
-      .post("http://localhost:3001/api/v1/multiple/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        onUploadProgress(progressEvent) {
-          let percentCompleted =
-            (progressEvent.loaded * 100) / progressEvent.total;
-          setUploadPercent(percentCompleted);
-          console.log(percentCompleted);
-        },
-      })
-      .then((res) => {
-        setTimeout(() => {
-          setUploadPercent(0);
-          setSelectedFiles([]);
-          //todo: reset form
-        }, 2000);
-      });
+  useEffect(() => {
+    if (props.files != null) {
+      AddFile(props.files);
+    }
+  }, []);
+
+  useEffect(() => {
+    setUploadPercent((uploadSize / totalSize) * 100);
+  }, [uploadSize, totalSize]);
+
+  const AddFile = (e) => {
+    let newFiles = e.target.files;
+    let aux = [...newFiles];
+    setSelectedFiles(aux);
+    ChangeTotalSize(aux);
+    setIsPause(Array(aux.length).fill(false));
   };
 
+  const ChangeTotalSize = (files) => {
+    let total = 0;
+    files.forEach((file) => {
+      total += file.size;
+    });
+    setTotalSize(total);
+  };
+
+  const DinamicSize = (size) => {
+    if (size === 0) {
+      return "0 B";
+    }
+    let typeIndex = Math.floor(Math.log(size) / Math.log(1024));
+    let typeArray = ["B", "KB", "MB", "GB", "TB", "PB"];
+    let newSize = (size / Math.pow(1024, typeIndex)).toFixed(2);
+    return `${newSize} ${typeArray[typeIndex]}`;
+  };
+
+  const increaseIndex = () => {
+    setCurrentIndex(currentIndex + 1);
+    if (currentIndex === selectedFiles.length - 1) {
+      if (!isPause.includes(true)) {
+        setIsUploader(true);
+      } else {
+        setCurrentIndex(isPause.indexOf(true));
+      }
+    }
+  };
+
+  const CancelAll = () => {};
+  const RestoreAll = () => {};
+
   return (
-    <div className={styles.modal}>
+    <div className={styles.modal} data-testid="upload-modal">
       <div className={styles.modalHeader}>
         <h4>{props.title}</h4>
       </div>
       <main className={styles.modalBody}>
-        <form
-          id="form"
-          className={styles.modalForm}
-          onSubmit={(e) => HandleSubmit(e)}
-        >
-          <div className={styles.btn_container}>
-            <span className={styles.btn_text}>
-              {selectedFiles.length} file(s) selected
-            </span>
-            <label htmlFor="upload[]" className={styles.btn_label}>
-              <BiFolder className={styles.btn_icon} />
-            </label>
-            <input
-              type="file"
-              id="upload[]"
-              name="upload[]"
-              multiple
-              style={{ display: "none" }}
-              onChange={(e) => setSelectedFiles([...e.target.files])}
-            />
-          </div>
-          {uploadPercent > 0 && <ProgressBar value={uploadPercent} />}
-          <button type="submit" className={styles.btn_action}>
-            {/* //todo: make Loading, disable btn */}
-            Upload
-          </button>
-        </form>
-        <div className={styles.modal_preview}>
-          {selectedFiles.map((file, index) => (
-            <div className={styles.modal_preview_item} key={index}>
-              <div className={styles.modal_preview_item_img}>
-                <img
-                  src={
-                    URL.createObjectURL(file)
-                      ? URL.createObjectURL(file)
-                      : "https://via.placeholder.com/150"
-                    // todo: correct second loading preview item
-                  }
-                  alt="preview"
-                  className={styles.modal_preview_item_img_img}
-                />
-              </div>
-              <div className={styles.modal_preview_item_info}>
-                <p className={styles.modal_preview_item_info_name}>
-                  <span>{file.name}</span>
-                </p>
-                <p className={styles.modal_preview_item_info_size}>
-                  {/* //todo: dinamic change to kb-mb-gb... */}
-                  <span>{(file.size / 1024).toFixed(2)} kb</span>
-                </p>
-              </div>
-            </div>
-          ))}
+        <ProgressBar upload width={uploadPercent} text="Uploading..." />
+        {/* )} */}
+        <div className={styles.status_info}>
+          <span>{`${uploadPercent.toFixed(0)} %`}</span>|
+          <span>{`${DinamicSize(uploadSize)}/${DinamicSize(totalSize)}`}</span>
         </div>
+        {!isUploader && (
+          <div style={{ float: "right" }}>
+            <span
+              className={styles.btn_terciary}
+              onClick={() => console.log("cancel")}
+            >
+              cancel all
+            </span>
+            <span
+              className={styles.btn_terciary}
+              onClick={() => console.log("restore all")}
+            >
+              restore all
+            </span>
+          </div>
+        )}
+        <div className={styles.modal_preview}>
+          {selectedFiles.map((file, index) => {
+            return (
+              <UploadItem
+                file={file}
+                key={index}
+                index={index}
+                currentIndex={currentIndex}
+                increaseIndex={increaseIndex}
+                isPause={isPause}
+                setIsPause={setIsPause}
+                setUploadSize={(size) => setUploadSize(uploadSize + size)}
+              />
+            );
+          })}
+        </div>
+        {isUploader && (
+          <button
+            className={`${styles.btn_primary} ${styles.btn_buttom}`}
+            onClick={() => props.onClose()}
+          >
+            Close
+          </button>
+        )}
       </main>
     </div>
   );

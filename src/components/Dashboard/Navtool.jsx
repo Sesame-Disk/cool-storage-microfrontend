@@ -9,7 +9,12 @@ const Navtool = () => {
   return (
     <div className={styles.container}>
       <Link to=".">
-        <img src="logo.png" alt="logo" className={styles.logo} />
+        <img
+          src="logo.png"
+          alt="logo"
+          className={styles.logo}
+          data-testid="logoImg"
+        />
       </Link>
       <HandleClickOut
         onClickOutside={() => setIsOpen(false)}

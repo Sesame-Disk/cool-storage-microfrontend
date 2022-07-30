@@ -25,6 +25,11 @@
   font-family: sans-serif;
 }
 
+.progress_bar_green {
+  background-color: rgb(14, 186, 14);
+  box-shadow: 0 0 5px rgb(14, 186, 14);
+}
+
 .progress_bar_text {
   display: none;
 }

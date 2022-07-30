@@ -2,19 +2,12 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Login from "./Login";
 import axios from "axios";
+import AuthContext from "../../store/auth-context";
 
 jest.mock("axios");
 jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
   Link: jest.fn(),
-}));
-
-jest.mock("../../store/auth-context", () => ({
-  useContext: jest.fn(),
-  AuthContext: {
-    login: jest.fn(),
-    updateUser: jest.fn(),
-  },
 }));
 
 describe("<Login />", () => {

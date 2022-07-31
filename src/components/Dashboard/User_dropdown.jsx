@@ -12,7 +12,11 @@ const User_dropdawn = ({ show, setShow }) => {
   const info = authContext.user;
   return (
     <div className={styles.profile}>
-      <div className={styles.dropdown_button} onClick={() => setShow(!show)}>
+      <div
+        className={styles.dropdown_button}
+        onClick={() => setShow(!show)}
+        data-testid="user_icon_dropdown"
+      >
         <img
           src={info.avatar_url}
           alt={info.avatar_url}
@@ -24,7 +28,7 @@ const User_dropdawn = ({ show, setShow }) => {
         />
       </div>
       <Dropdown isOpen={show} onClose={setShow}>
-        <div className={styles.dropdown_header}>
+        <div className={styles.dropdown_header} data-testid="user_dropdown">
           <img
             src={info.avatar_url}
             alt={info.avatar_url}
@@ -37,7 +41,7 @@ const User_dropdawn = ({ show, setShow }) => {
           <span>
             Used: {info.usage} MB / {info.total} MB
           </span>
-          <ProgressBar value={info.space_usage} width="50%" />
+          <ProgressBar value={info.space_usage} width="50" />
         </div>
         <Link to="/" className={styles.dropdown_item}>
           Home

@@ -2,7 +2,7 @@ import styles from "./Dashboard.module.css";
 
 const Dashboard = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-testid="dash-content">
       <div className={styles.content}>
         <div className={styles["table-concept"]}>
           <table>

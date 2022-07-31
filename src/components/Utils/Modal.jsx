@@ -6,6 +6,7 @@ const Modal = (props) => {
       className={`${styles.modal_window} ${
         props.isOpen ? styles.modal_open : ""
       }`}
+      data-testid="modal"
     >
       <div className={styles.modal_content} style={{ width: props.width }}>
         {props.onClose && (

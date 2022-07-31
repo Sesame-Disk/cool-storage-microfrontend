@@ -13,6 +13,7 @@ const ProgressBar = ({ value }) => {
       style={{
         boxShadow: `0 0 5px ${value === 100 ? "#4bb543" : "#e76f51"}`,
       }}
+      data-testid="progress-bar"
     >
       <div className={`${styles.progress_bar}`} style={fill}>
         <span className={value !== 100 ? styles.progress_bar__text : null}>

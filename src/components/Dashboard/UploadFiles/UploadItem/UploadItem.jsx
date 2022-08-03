@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
+import React from "react";
 import styles from "./UploadItem.module.css";
 import HugeUploader from "huge-uploader";
 import sha256 from "crypto-js/sha256";
 
 const UploadItem = ({ file, index, ...props }) => {
   const [filePercent, setFilePercent] = useState(0);
+  const [isPause, setIsPause] = useState(false);
   const [uploader, setUploader] = useState(null);
   const [hash, setHash] = useState("");
+
   let src = "/images/file_preview.png";
   let cover = "";
   if (file.type.includes("image")) {
@@ -17,13 +20,18 @@ const UploadItem = ({ file, index, ...props }) => {
   useEffect(() => {
     const reader = new FileReader();
     reader.onload = async (e) => {
-      setHash(sha256(e.target.result).toString());
+      // setHash(sha256(e.target.result).toString());
+      // setHash(sha256("abc").toString());
     };
     reader.readAsText(file);
   }, []);
 
   useEffect(() => {
-    if (hash !== "") {
+    if (
+      index === props.currentIndex &&
+      uploader === null &&
+      !props.isUploading
+    ) {
       setUploader(
         new HugeUploader({
           endpoint: "http://localhost:3001/api/v1/single/upload",
@@ -35,8 +43,9 @@ const UploadItem = ({ file, index, ...props }) => {
           },
         })
       );
+      props.setIsUploading(true);
     }
-  }, [hash]);
+  }, [props.currentIndex]);
 
   useEffect(() => {
     if (uploader !== null) {
@@ -58,7 +67,7 @@ const UploadItem = ({ file, index, ...props }) => {
       });
 
       uploader.on("finish", (body) => {
-        props.increaseIndex();
+        props.onFinish();
       });
     }
   }, [uploader]);
@@ -78,15 +87,14 @@ const UploadItem = ({ file, index, ...props }) => {
     return `${newSize} ${typeArray[typeIndex]}`;
   };
   const TogglePause = () => {
-    let auxIsPause = [...props.isPause];
     if (index === props.currentIndex) {
-      // uploader.togglePause()
-      let auxUploader = uploader;
-      auxUploader.togglePause();
-      setUploader(auxUploader);
+      uploader.togglePause();
+      // let auxUploader = uploader;
+      // auxUploader.togglePause();
+      // setUploader(auxUploader);
     }
-    auxIsPause[index] = !auxIsPause[index];
-    props.setIsPause(auxIsPause);
+    props.togglePause(index);
+    setIsPause(!isPause);
   };
 
   return (
@@ -108,7 +116,7 @@ const UploadItem = ({ file, index, ...props }) => {
       <div className={styles.modal_preview_item_actions}>
         {/* //todo: togglePause func */}
         {filePercent !== 100 &&
-          (props.isPause[index] ? (
+          (isPause ? (
             <span className={styles.btn_terciary} onClick={() => TogglePause()}>
               restore
             </span>
@@ -122,4 +130,4 @@ const UploadItem = ({ file, index, ...props }) => {
   );
 };
 
-export default UploadItem;
+export default React.memp(UploadItem);
